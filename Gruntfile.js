@@ -346,17 +346,6 @@ module.exports = function (grunt) {
         configFile: 'test/karma.conf.js',
         singleRun: true
       }
-    },
-  
-	// Web-server
-	web_server: {
-      options: {
-        cors: true,
-        port: 8000,
-        nevercache: true,
-        logRequests: false
-      },
-      foo: 'bar' // For some reason an extra key with a non-object value is necessary
     }
   });
 
@@ -411,6 +400,4 @@ module.exports = function (grunt) {
     'test',
     'build'
   ]);
-  
-  grunt.loadNpmTasks('grunt-web-server');
 };
