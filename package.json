@@ -29,7 +29,6 @@
     "grunt-usemin": "^2.1.1",
     "grunt-wiredep": "^1.7.0",
     "jshint-stylish": "^0.2.0",
-    "http-server": "^0.6.1",
     "karma": "^0.12.24",
     "karma-jasmine": "^0.2.3",
     "karma-phantomjs-launcher": "^0.1.4",
@@ -43,7 +42,7 @@
   "scripts": {
     "pretest": "npm install",
     "test": "grunt test",
-    "start": "http-server -a 0.0.0.0 -p 8000",
+    "start": "grunt serve",
     "preupdate-webdriver": "npm install",
     "update-webdriver": "webdriver-manager update",
     "preprotractor": "npm run update-webdriver",
