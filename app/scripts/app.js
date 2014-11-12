@@ -24,8 +24,8 @@ angular
         controller: 'AboutCtrl'
       })
       .when('/selfregistration', {
-        templateUrl: 'views/selfregistration.html',
-        controller: 'AboutCtrl'
+        templateUrl: '../views/self-registration.html',
+        controller: 'SelfRegistrationCtrl'
       })
       .otherwise({
         redirectTo: '/'
