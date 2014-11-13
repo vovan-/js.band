@@ -1,1 +1,33 @@
 <p>This is the SelfRegistration view.</p>
+<div ng-controller="SelfRegistrationCtrl">
+  <form name="selfRegistrationForm" novalidate>
+  <ul>
+    <!--@TODO Support ordering-->
+    <li ng-repeat="(chapterId, chapter) in chapters ">
+      <span>{{chapter.name}}</span>
+      <div>
+
+        <ul>
+          <li ng-repeat="(questionId, question) in chapter.questions ">
+            <!--
+              https://docs.angularjs.org/api/ng/directive/form
+              Since you cannot dynamically generate the name attribute of input elements using
+              interpolation, you have to wrap each set of repeated inputs in an ngForm directive
+              and nest these in an outer form element.
+            -->
+            <ng-form name="questionForm">
+            <div>
+              <label for="{{questionId}}">{{question.name[language]}}</label>
+              <input id="{{questionId}}" name="question"
+                     type="{{question.type}}" ng-model="question.value" ng-required="question.mandatory">
+               <span class="error" ng-show="questionForm.question.$error.required">Required!</span>
+            </div>
+            </ng-form>
+          </li>
+        </ul>
+      </div>
+    </li>
+  </ul>
+  <input type="submit" value="Finish" ng-disabled="selfRegistrationForm.$invalid" ng-click="finish()">
+  </form>
+</div>

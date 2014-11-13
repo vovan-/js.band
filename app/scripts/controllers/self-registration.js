@@ -8,7 +8,6 @@
  * Controller of the jsbandApp
  */
 
-
 var questionType = {
   text:"text",
   number:"number",
@@ -16,7 +15,8 @@ var questionType = {
 };
 angular.module('jsbandApp')
   .controller('SelfRegistrationCtrl', function ($scope) {
-    $scope.language='English';
+//    @TODO How to proceed with not Existing translation
+    $scope.language='de';
     //@TODO What abount icons?
     $scope.availableLanguages={
       en:"English",
@@ -61,7 +61,7 @@ angular.module('jsbandApp')
       "chapter-id-2": {
         name: "Parent company",
         questions: {
-          "question-id-1": {
+          "question-id-4": {
             name:{
               en:"What is your Parent Organization name?",
               de:"Was ist Ihre Mutterorganisationsname?"
@@ -70,7 +70,7 @@ angular.module('jsbandApp')
             value: "",
             mandatory:false
           },
-          "question-id-2": {
+          "question-id-5": {
             name:{
               en:"Income",
               de:"Einkommen"
@@ -79,7 +79,7 @@ angular.module('jsbandApp')
             value: "",
             mandatory:false
           },
-          "question-id-3": {
+          "question-id-6": {
             name: {
               en:"Country",
               ru:"Страна"
@@ -91,5 +91,9 @@ angular.module('jsbandApp')
           }
         }
       }
+    }
+    $scope.finish = function (){
+      // some validation here
+      console.log($scope.chapters);
     }
   });
