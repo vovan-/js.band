@@ -86,6 +86,21 @@ module.exports = function (grunt) {
           }
         }
       },
+      livereloadnoopen: {
+        options: {
+          open: false,
+          middleware: function (connect) {
+            return [
+              connect.static('.tmp'),
+              connect().use(
+                '/bower_components',
+                connect.static('./bower_components')
+              ),
+              connect.static(appConfig.app)
+            ];
+          }
+        }
+      },
       test: {
         options: {
           port: 9001,
@@ -346,7 +361,18 @@ module.exports = function (grunt) {
         configFile: 'test/karma.conf.js',
         singleRun: true
       }
-    }
+    },
+
+     protractor: {
+       options: {
+         configFile: "test/protractor.conf.js", // Default config file
+         keepAlive: true, // If false, the grunt process stops when the test fails.
+         noColor: false,
+         args: {
+         }
+       },
+       target: {}
+     }
   });
 
 
@@ -394,6 +420,17 @@ module.exports = function (grunt) {
     'usemin',
     'htmlmin'
   ]);
+
+  grunt.registerTask('protractorsrv',[
+      'clean:server',
+      'wiredep',
+      'concurrent:server',
+      'autoprefixer',
+      'connect:livereloadnoopen',
+      'protractor'
+    ]);
+
+  grunt.loadNpmTasks('grunt-protractor-runner');
 
   grunt.registerTask('default', [
     'newer:jshint',
