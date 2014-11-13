@@ -1,0 +1,36 @@
+<div ng-controller="NotesCtrl" class="container">
+
+  <p style="color: red">RESTful services are not starting via "Grunt serve" yet</p>
+
+  <div class="jumbotron text-center">
+    <h3>Notes: <span class="label label-info">{{ notes.length }}</span></h3>
+  </div>
+
+  <!-- Notes list -->
+  <div id="notes-list" class="row">
+    <div class="col-sm-4 col-sm-offset-4">
+
+      <div class="checkbox" ng-repeat="note in notes">
+        <label>
+          <input type="checkbox" ng-click="deleteNote(note._id)"> {{ note.text }}
+        </label>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Create new note -->
+  <div id="todo-form" class="row">
+    <div class="col-sm-8 col-sm-offset-2 text-center">
+      <form>
+        <div class="form-group">
+
+          <input type="text" class="form-control input-lg text-center" placeholder="Enter new note here" ng-model="formData.text">
+        </div>
+
+        <button type="submit" class="btn btn-primary btn-lg" ng-click="createNote()">Add</button>
+      </form>
+    </div>
+  </div>
+
+</div>
