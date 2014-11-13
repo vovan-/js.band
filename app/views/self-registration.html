@@ -1,6 +1,8 @@
 <p>This is the SelfRegistration view.</p>
 <div ng-controller="SelfRegistrationCtrl">
   <form name="selfRegistrationForm" novalidate>
+    <!--label for (key , value) in object-->
+  <select ng-model="language" ng-options="code as name for (code, name) in availableLanguages"></select>
   <ul>
     <!--@TODO Support ordering-->
     <li ng-repeat="(chapterId, chapter) in chapters ">
@@ -17,7 +19,7 @@
             -->
             <ng-form name="questionForm">
             <div>
-              <label for="{{questionId}}">{{question.name[language]}}</label>
+              <label for="{{questionId}}">{{translate(question.name)}}</label>
               <input id="{{questionId}}" name="question"
                      type="{{question.type}}" ng-model="question.value" ng-required="question.mandatory">
                <span class="error" ng-show="questionForm.question.$error.required">Required!</span>

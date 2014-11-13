@@ -24,6 +24,7 @@ angular.module('jsbandApp')
       ru:"Русский",
       jp:"日本の"
     };
+    $scope.systemLanguage='en';
     $scope.chapters = {
       "chapter-id-1": {
         name: "About you",
@@ -82,7 +83,8 @@ angular.module('jsbandApp')
           "question-id-6": {
             name: {
               en:"Country",
-              ru:"Страна"
+              ru:"Страна",
+              jp:"国"
             },
             type: questionType.entity,
             entytyType:"region",
@@ -91,9 +93,12 @@ angular.module('jsbandApp')
           }
         }
       }
-    }
+    };
     $scope.finish = function (){
       // some validation here
       console.log($scope.chapters);
-    }
+    };
+    $scope.translate = function (mlstring){
+      return mlstring[$scope.language] || mlstring[$scope.systemLanguage] || "no translation";
+    };
   });
