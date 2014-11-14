@@ -1,35 +1,53 @@
 <p>This is the SelfRegistration view.</p>
 <div ng-controller="SelfRegistrationCtrl">
-  <form name="selfRegistrationForm" novalidate>
-    <!--label for (key , value) in object-->
-  <select ng-model="language" ng-options="code as name for (code, name) in availableLanguages"></select>
-  <ul>
-    <!--@TODO Support ordering-->
-    <li ng-repeat="(chapterId, chapter) in chapters ">
-      <span>{{chapter.name}}</span>
-      <div>
 
-        <ul>
-          <li ng-repeat="(questionId, question) in chapter.questions ">
-            <!--
-              https://docs.angularjs.org/api/ng/directive/form
-              Since you cannot dynamically generate the name attribute of input elements using
-              interpolation, you have to wrap each set of repeated inputs in an ngForm directive
-              and nest these in an outer form element.
-            -->
-            <ng-form name="questionForm">
-            <div>
-              <label for="{{questionId}}">{{translate(question.name)}}</label>
-              <input id="{{questionId}}" name="question"
-                     type="{{question.type}}" ng-model="question.value" ng-required="question.mandatory">
-               <span class="error" ng-show="questionForm.question.$error.required">Required!</span>
-            </div>
-            </ng-form>
-          </li>
-        </ul>
-      </div>
-    </li>
-  </ul>
-  <input type="submit" value="Finish" ng-disabled="selfRegistrationForm.$invalid" ng-click="finish()">
-  </form>
+  <div ng-show="(currentPage==PAGES.Answer)">
+    <form name="selfRegistrationForm" novalidate>
+      <!--label for (key , value) in object-->
+      <select ng-model="language" ng-options="code as name for (code, name) in availableLanguages"></select>
+      <ul>
+        <!--@TODO Support ordering-->
+        <li ng-repeat="(chapterId, chapter) in chapters ">
+          <span>{{chapter.name}}</span>
+
+          <div>
+
+            <ul>
+              <li ng-repeat="(questionId, question) in chapter.questions ">
+                <!--
+                  https://docs.angularjs.org/api/ng/directive/form
+                  Since you cannot dynamically generate the name attribute of input elements using
+                  interpolation, you have to wrap each set of repeated inputs in an ngForm directive
+                  and nest these in an outer form element.
+                -->
+                <ng-form name="questionForm">
+                  <div>
+                    <label for="{{questionId}}">{{translate(question.name)}}</label>
+                    <input id="{{questionId}}" name="question"
+                           type="{{question.type}}" ng-model="question.value" ng-required="question.mandatory">
+                    <span class="error" ng-show="questionForm.question.$error.required">Required!</span>
+                  </div>
+                </ng-form>
+              </li>
+            </ul>
+          </div>
+        </li>
+      </ul>
+      <!--UI translation-->
+      <input type="button" value="Save & next step" ng-disabled="selfRegistrationForm.$invalid" ng-click="saveAndNext()">
+      <input type="button" value="Close" ng-click="closeSelfRegistration()">
+    </form>
+  </div>
+  <div ng-show="currentPage==PAGES.Finish">
+    Bla-bla
+    <input type="button" value="Finish"  ng-click="finishSelfRegistration()">
+    <input type="button" value="Previous step"  ng-click="gotoAnswer()">
+    <input type="button" value="Close" ng-click="closeSelfRegistration()">
+  </div>
+  <div ng-show="currentPage==PAGES.FollowUP">
+    <span>MESSAGE with ok/not ok</span>
+    We thank you for your interest in registration with our company. Our clearing staff will review your registration and will get in touch with you soon. For further questions...
+
+    <input type="button" value="Close" ng-click="closeSelfRegistration()">
+  </div>
 </div>
