@@ -27,10 +27,6 @@ angular
         templateUrl: '../views/self-registration.html',
         controller: 'SelfRegistrationCtrl'
       })
-      .when('/notes', {
-        templateUrl: '../views/notes.html',
-        controller: 'NotesCtrl'
-      })
       .otherwise({
         redirectTo: '/'
       });

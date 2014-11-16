@@ -15,6 +15,9 @@ module.exports = function (grunt) {
   // Time how long tasks take. Can help when optimizing build times
   require('time-grunt')(grunt);
 
+  // Load questionnaire service
+  var questionnaireServiceDispatcher = require('./questionnaireService.js')(grunt);
+
   // Configurable paths for the application
   var appConfig = {
     app: require('./bower.json').appPath || 'app',
@@ -76,6 +79,11 @@ module.exports = function (grunt) {
           open: true,
           middleware: function (connect) {
             return [
+              function (req, res, next) {
+                if (!questionnaireServiceDispatcher.dispatchRequest(req, res)) {
+                  next();
+                }
+              },
               connect.static('.tmp'),
               connect().use(
                 '/bower_components',

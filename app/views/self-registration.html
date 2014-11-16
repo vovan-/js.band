@@ -5,7 +5,7 @@
   <select ng-model="language" ng-options="code as name for (code, name) in availableLanguages"></select>
   <ul>
     <!--@TODO Support ordering-->
-    <li ng-repeat="(chapterId, chapter) in chapters ">
+    <li ng-repeat="(chapterId, chapter) in questionnaire.chapters ">
       <span>{{chapter.name}}</span>
       <div>
 
