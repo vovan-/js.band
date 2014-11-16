@@ -47,7 +47,7 @@
     "node": ">=0.10.0"
   },
   "scripts": {
-    "pretest": "npm install",
+    "pretest": "npm install && npm run update-webdriver",
     "test": "grunt test",
     "start": "grunt serve",
     "preupdate-webdriver": "npm install",
