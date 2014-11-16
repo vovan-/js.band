@@ -363,16 +363,35 @@ module.exports = function (grunt) {
       }
     },
 
-     protractor: {
+   protractor: {
+     options: {
+       configFile: "test/protractor.conf.js", // Default config file
+       keepAlive: true, // If false, the grunt process stops when the test fails.
+       noColor: false,
+       args: {
+       }
+     },
+     test: {
        options: {
-         configFile: "test/protractor.conf.js", // Default config file
-         keepAlive: true, // If false, the grunt process stops when the test fails.
-         noColor: false,
          args: {
+           baseUrl: 'http://localhost:<%= connect.test.options.port %>'
          }
-       },
-       target: {}
+       }
+     },
+     prod: {},
+     saucelabs: {
+       options: {
+         args: {
+           sauceUser: process.env.SAUCE_USERNAME,
+           sauceKey: process.env.SAUCE_ACCESS_KEY/*,
+           tunnel-identifier: process.env.TRAVIS_JOB_NUMBER,
+           build: process.env.TRAVIS_BUILD_NUMBER*/
+           ,
+           baseUrl: 'http://localhost:<%= connect.test.options.port %>'
+         }
+       }
      }
+   }
   });
 
 
@@ -401,7 +420,8 @@ module.exports = function (grunt) {
     'concurrent:test',
     'autoprefixer',
     'connect:test',
-    'karma'
+    'karma',
+    'protractor:saucelabs'
   ]);
 
   grunt.registerTask('build', [
@@ -427,7 +447,7 @@ module.exports = function (grunt) {
       'concurrent:server',
       'autoprefixer',
       'connect:livereloadnoopen',
-      'protractor'
+      'protractor:prod'
     ]);
 
   grunt.loadNpmTasks('grunt-protractor-runner');

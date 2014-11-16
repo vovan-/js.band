@@ -4,3 +4,10 @@ node_js:
 before_script:
   - 'npm install -g bower grunt-cli'
   - 'bower install'
+env:
+  global:
+    - secure: gmZTMXJzjcMMsDxvieGKpJhNaUEV3Swnat58aug96/r0GC6SZVia4OdyvStfi4ymaR3/oAJ1aPyj/6kRfPTyQKQ4sE3Lg+QR4I7T1/uk48eEmBdpIBofP/z/GJ2lAZLtmPt6rq5aX1MUZSqPDWMfXfBIL9YTX0JuB9k4l2Fvw94=
+    - secure: QB0prB00WW06BtexIZJvsGSjC41GaSEM/K3gOUQ2hnvn6UZiDX6iRK8kl4PAuVyejqO7dDCcSJC+IciaFKFDkkQpDBH21CoDeAVV6+BoTfa9alBlNs/Mplu+SxUI5Az51E6B1sR4vnboIPd7FlIqohFJYaChjVeBYn0XRER0bgk=
+    - NODE_ENV=travis
+addons:
+  sauce_connect: true
