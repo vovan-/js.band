@@ -1,4 +1,4 @@
-exports.config = {
+var config = {
   allScriptsTimeout: 11000,
 
   specs: [
@@ -7,13 +7,11 @@ exports.config = {
 
   capabilities: {
     'browserName': 'chrome',
-    'tunnel-identifier': process.env.TRAVIS_JOB_NUMBER,
-    'build': process.env.TRAVIS_BUILD_NUMBER,
-    'name': 'ngValidation Protractor Tests'
+    'name': 'Protractor Tests'
   },
 
 //  chromeOnly: true,
-  directConnect:true,
+//  directConnect:true,
   /*baseUrl: 'http://localhost:9000/',*/
   baseUrl: 'http://localhost:' + (process.env.HTTP_PORT || '9000'),
 //  seleniumAddress: 'http://localhost:4444/wd/hub',
@@ -24,3 +22,16 @@ exports.config = {
     defaultTimeoutInterval: 30000
   }
 };
+
+if (process.env.TRAVIS_BUILD_NUMBER) {
+  config.sauceUser = 'vovan-',
+    config.sauceKey = 'a3f0bcdc-778a-4402-89ea-981552518106',
+    config.capabilities = {
+      'browserName': 'chrome',
+      'tunnel-identifier': process.env.TRAVIS_JOB_NUMBER,
+      'build': process.env.TRAVIS_BUILD_NUMBER,
+      'name': 'App Tests'
+    };
+}
+
+exports.config = config;

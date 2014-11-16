@@ -366,7 +366,7 @@ module.exports = function (grunt) {
    protractor: {
      options: {
        configFile: "test/protractor.conf.js", // Default config file
-       keepAlive: true, // If false, the grunt process stops when the test fails.
+       keepAlive: false, // If false, the grunt process stops when the test fails.
        noColor: false,
        args: {
        }
@@ -374,20 +374,20 @@ module.exports = function (grunt) {
      test: {
        options: {
          args: {
-           baseUrl: 'http://localhost:<%= connect.test.options.port %>'
+           baseUrl: 'http://localhost:<%= connect.test.options.port %>/'
          }
        }
      },
      prod: {},
      saucelabs: {
        options: {
-         args: {
+         args: {/*
            sauceUser: process.env.SAUCE_USERNAME,
-           sauceKey: process.env.SAUCE_ACCESS_KEY/*,
+           sauceKey: process.env.SAUCE_ACCESS_KEY,
            tunnel-identifier: process.env.TRAVIS_JOB_NUMBER,
-           build: process.env.TRAVIS_BUILD_NUMBER*/
-           ,
-           baseUrl: 'http://localhost:<%= connect.test.options.port %>'
+           build: process.env.TRAVIS_BUILD_NUMBER
+           ,*/
+       baseUrl: 'http://localhost:<%= connect.test.options.port %>/'
          }
        }
      }
@@ -421,7 +421,7 @@ module.exports = function (grunt) {
     'autoprefixer',
     'connect:test',
     'karma',
-    'protractor:saucelabs'
+    'protractor:test'
   ]);
 
   grunt.registerTask('build', [
