@@ -58,7 +58,7 @@ module.exports = function (grunt) {
                 de: "Einkommen"
               },
               type: "number",
-              value: "200",
+              value: 200,
               mandatory: false
             },
             "question-id-6": {
