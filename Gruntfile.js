@@ -18,6 +18,12 @@ module.exports = function (grunt) {
   // Load questionnaire service
   var questionnaireServiceDispatcher = require('./questionnaireService.js')(grunt);
 
+  var questionnaireMiddleware = function (req, res, next) {
+    if (!questionnaireServiceDispatcher.dispatchRequest(req, res)) {
+      next();
+    }
+  };
+
   // Configurable paths for the application
   var appConfig = {
     app: require('./bower.json').appPath || 'app',
@@ -79,11 +85,7 @@ module.exports = function (grunt) {
           open: true,
           middleware: function (connect) {
             return [
-              function (req, res, next) {
-                if (!questionnaireServiceDispatcher.dispatchRequest(req, res)) {
-                  next();
-                }
-              },
+              questionnaireMiddleware,
               connect.static('.tmp'),
               connect().use(
                 '/bower_components',
@@ -99,6 +101,7 @@ module.exports = function (grunt) {
           open: false,
           middleware: function (connect) {
             return [
+              questionnaireMiddleware,
               connect.static('.tmp'),
               connect().use(
                 '/bower_components',
@@ -114,6 +117,7 @@ module.exports = function (grunt) {
           port: 9001,
           middleware: function (connect) {
             return [
+              questionnaireMiddleware,
               connect.static('.tmp'),
               connect.static('test'),
               connect().use(
@@ -128,7 +132,13 @@ module.exports = function (grunt) {
       dist: {
         options: {
           open: true,
-          base: '<%= yeoman.dist %>'
+          base: '<%= yeoman.dist %>',
+          middleware: function (connect) {
+            return [
+              questionnaireMiddleware,
+              connect.static(appConfig.dist)
+            ];
+          }
         }
       }
     },
