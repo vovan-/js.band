@@ -45,8 +45,6 @@
     "test": "grunt test",
     "start": "grunt serve",
     "preupdate-webdriver": "npm install",
-    "update-webdriver": "webdriver-manager update",
-    "preprotractor": "npm run update-webdriver",
-    "protractor": "protractor test/protractor.conf.js"
+    "update-webdriver": "webdriver-manager update"
   }
 }

@@ -396,19 +396,7 @@ module.exports = function (grunt) {
          }
        }
      },
-     prod: {},
-     saucelabs: {
-       options: {
-         args: {/*
-           sauceUser: process.env.SAUCE_USERNAME,
-           sauceKey: process.env.SAUCE_ACCESS_KEY,
-           tunnel-identifier: process.env.TRAVIS_JOB_NUMBER,
-           build: process.env.TRAVIS_BUILD_NUMBER
-           ,*/
-       baseUrl: 'http://localhost:<%= connect.test.options.port %>/'
-         }
-       }
-     }
+     prod: {}
    }
   });
 
@@ -433,7 +421,7 @@ module.exports = function (grunt) {
     grunt.task.run(['serve:' + target]);
   });
 
-  grunt.registerTask('test', [
+  grunt.registerTask('test', 'Prepare web server then first run unit tests using Karma, and after that E2E tests on it using protractor', [
     'clean:server',
     'concurrent:test',
     'autoprefixer',
@@ -459,16 +447,14 @@ module.exports = function (grunt) {
     'htmlmin'
   ]);
 
-  grunt.registerTask('protractorsrv',[
+  grunt.registerTask('protractorsrv', 'Prepare web server then run E2E tests on it using protractor',[
       'clean:server',
       'wiredep',
       'concurrent:server',
       'autoprefixer',
-      'connect:livereloadnoopen',
-      'protractor:prod'
+      'connect:test',
+      'protractor:test'
     ]);
-
-  grunt.loadNpmTasks('grunt-protractor-runner');
 
   grunt.registerTask('default', [
     'newer:jshint',
