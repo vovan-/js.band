@@ -96,22 +96,6 @@ module.exports = function (grunt) {
           }
         }
       },
-      livereloadnoopen: {
-        options: {
-          open: false,
-          middleware: function (connect) {
-            return [
-              questionnaireMiddleware,
-              connect.static('.tmp'),
-              connect().use(
-                '/bower_components',
-                connect.static('./bower_components')
-              ),
-              connect.static(appConfig.app)
-            ];
-          }
-        }
-      },
       test: {
         options: {
           port: 9001,
