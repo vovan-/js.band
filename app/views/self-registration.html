@@ -1,8 +1,8 @@
-<p>This is the SelfRegistration view.</p>
+<h2><span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Self registration</h2>
 <div>
 
     <!--label for (key , value) in object-->
-    <select ng-model="language" ng-options="code as name for (code, name) in availableLanguages"></select>
+    <select ng-model="language" ng-options="code as name for (code, name) in availableLanguages" class="form-control"></select>
     <p></p>
     <div class="panel-group" id="accordionSelfReg" role="tablist" aria-multiselectable="true">
         <div class="panel panel-default">
@@ -16,36 +16,28 @@
             <div id="collapseOne" class="panel-collapse " role="tabpanel" aria-labelledby="headingOne">
                 <div class="panel-body" ng-show="(currentPage==PAGES.Answer)">
                     <form name="selfRegistrationForm" novalidate>
-                            <ul>
                                 <!--@TODO Support ordering-->
-                                <li ng-repeat="(chapterId, chapter) in questionnaire.chapters ">
+                                <div ng-repeat="(chapterId, chapter) in questionnaire.chapters " style="padding-bottom: 10px;">
                                     <span>{{chapter.name}}</span>
 
-                                    <div>
-
-                                        <ul>
-                                            <li ng-repeat="(questionId, question) in chapter.questions ">
+                                            <div ng-repeat="(questionId, question) in chapter.questions " style="padding-left: 30px; padding-bottom: 7px;">
                                                 <!--
                                                   https://docs.angularjs.org/api/ng/directive/form
                                                   Since you cannot dynamically generate the name attribute of input elements using
                                                   interpolation, you have to wrap each set of repeated inputs in an ngForm directive
                                                   and nest these in an outer form element.
                                                 -->
-                                                <ng-form name="questionForm">
-                                                    <div>
-                                                        <label for="{{questionId}}">{{translate(question.name)}}</label>
-                                                        <input id="{{questionId}}" name="question"
-                                                               type="{{question.type}}" ng-model="question.value"
-                                                               ng-required="question.mandatory">
+                                                <ng-form name="questionForm" class="form-inline">
+                                                    <fieldset class="form-group">
+                                                        <label class="control-label" for="{{questionId}}">{{translate(question.name)}}</label>
+                                                        <input id="{{questionId}}" name="question" type="{{question.type}}" ng-model="question.value"
+                                                               ng-required="question.mandatory" class="form-control">
                                                         <span class="error"
                                                               ng-show="questionForm.question.$error.required">Required!</span>
-                                                    </div>
+                                                    </fieldset>
                                                 </ng-form>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </li>
-                            </ul>
+                                            </div>
+                                </div>
                             <nav style="float: left">
                                 <ul class="pager">
                                     <li><a ng-click="saveAndNext()" ng-disabled="selfRegistrationForm.$invalid"><span class="glyphicon glyphicon-arrow-right" aria-hidden="true"></span> Save & next step</a></li>
