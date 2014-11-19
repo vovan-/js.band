@@ -7,12 +7,7 @@ var config = {
 
   capabilities: {
     'browserName': 'chrome',
-    'name': 'Protractor Tests',
-    "chromeOptions": {
-      binary: 'C:/Users/Vovan.Lenovo-PC/AppData/Local/Google/Chrome SxS/Application/chrome.exe',
-      args: [],
-      extensions: [],
-    }
+    'name': 'Protractor Tests'
   },
 
 //  chromeOnly: true,
