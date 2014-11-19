@@ -13,7 +13,7 @@ describe('Self-Registration Test: ', function() {
   });
 
   it('This URL should points exactly to the SelfRegistration view', function () {
-    expect(element(by.cssContainingText('.ng-scope', 'This is the SelfRegistration view.')).isPresent()).toBe(true);
+    expect(element(by.cssContainingText('.ng-scope', 'Self registration')).isPresent()).toBe(true);
   });
 
   it('Language has not been changed to \'English\'', function () {
