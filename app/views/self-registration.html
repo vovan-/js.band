@@ -3,6 +3,7 @@
 
     <!--label for (key , value) in object-->
     <select ng-model="language" ng-options="code as name for (code, name) in availableLanguages"></select>
+    <p></p>
     <div class="panel-group" id="accordionSelfReg" role="tablist" aria-multiselectable="true">
         <div class="panel panel-default">
             <div class="panel-heading" role="tab" id="headingOne">
@@ -45,10 +46,12 @@
                                     </div>
                                 </li>
                             </ul>
-                            <!--UI translation-->
-                            <input type="button" value="Save & next step" ng-disabled="selfRegistrationForm.$invalid"
-                                   ng-click="saveAndNext()">
-                            <input type="button" value="Close" ng-click="closeSelfRegistration()">
+                            <nav style="float: left">
+                                <ul class="pager">
+                                    <li><a ng-click="saveAndNext()" ng-disabled="selfRegistrationForm.$invalid"><span class="glyphicon glyphicon-arrow-right" aria-hidden="true"></span> Save & next step</a></li>
+                                    <li><a ng-click="closeSelfRegistration()">Close</a></li>
+                                </ul>
+                            </nav>
                         </form>
                 </div>
             </div>
@@ -63,10 +66,18 @@
             </div>
             <div id="collapseTwo" class="panel-collapse " role="tabpanel" aria-labelledby="headingTwo">
                 <div class="panel-body" ng-show="currentPage==PAGES.Finish">
-                        Bla-bla
-                        <input type="button" value="Finish" ng-click="finishSelfRegistration()">
-                        <input type="button" value="Previous step" ng-click="gotoAnswer()">
-                        <input type="button" value="Close" ng-click="closeSelfRegistration()">
+                    <strong>Do you want to finish the registration?</strong>
+                    <p>In this step you declare the registration to be finished.</p>
+                    <p>
+                        <button type="button" class="btn btn-default" ng-click="finishSelfRegistration()">
+                            <span class="glyphicon glyphicon-play" aria-hidden="true"></span> Finish
+                        </button></p>
+                    <nav style="float: left">
+                        <ul class="pager">
+                            <li><a ng-click="gotoAnswer()"><span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span> Previous step</a></li>
+                            <li><a ng-click="closeSelfRegistration()">Close</a></li>
+                        </ul>
+                    </nav>
                 </div>
             </div>
         </div>
@@ -80,11 +91,13 @@
             </div>
             <div id="collapseThree" class="panel-collapse " role="tabpanel" aria-labelledby="headingThree">
                 <div class="panel-body" ng-show="currentPage==PAGES.FollowUP">
-                        <span>MESSAGE with ok/not ok</span>
-                        We thank you for your interest in registration with our company. Our clearing staff will
-                        review your registration and will get in touch with you soon. For further questions...
-
-                        <input type="button" value="Close" ng-click="closeSelfRegistration()">
+                    <div class="alert alert-success" role="alert"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span> Your task has been completed successfully</div>
+                    <p>We thank you for your interest in registration with our company. Our clearing staff will
+                        review your registration and will get in touch with you soon. For further questions...</p>
+                    <p></p>
+                    <button type="button" class="btn btn-default" ng-click="closeSelfRegistration()">
+                        <span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Close
+                    </button>
                 </div>
             </div>
         </div>
