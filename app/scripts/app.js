@@ -11,9 +11,10 @@
 angular
   .module('jsbandApp', [
     'ngResource',
-    'ngRoute'
+    'ngRoute',
+    'pascalprecht.translate'
   ])
-  .config(function ($routeProvider) {
+  .config(function ($routeProvider, $translateProvider) {
     $routeProvider
       .when('/', {
         templateUrl: 'views/main.html',
@@ -30,4 +31,17 @@ angular
       .otherwise({
         redirectTo: '/'
       });
+
+
+    $translateProvider.
+      translations('en', {
+        'selfreg-header': 'Self registration',
+        INTRO_TEXT: 'And it has i18n support!'
+      })
+      .translations('de', {
+        'selfreg-header': 'Selbstregistrierung',
+        INTRO_TEXT: 'Und sie untersützt mehrere Sprachen!'
+      })
+      .fallbackLanguage('en');
+    //$translateProvider.preferredLanguage('en');
   });

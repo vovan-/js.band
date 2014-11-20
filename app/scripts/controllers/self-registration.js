@@ -14,7 +14,7 @@ var PAGES = {
   FollowUP:'FollowUP'
 };
 angular.module('jsbandApp')
-  .controller('SelfRegistrationCtrl', function ($scope,  $http) {
+  .controller('SelfRegistrationCtrl', function ($scope,  $http, $translate) {
     $scope.PAGES = PAGES;
     $scope.currentPage = PAGES.Answer;
 //    TODO How to proceed with not Existing translation
@@ -27,6 +27,11 @@ angular.module('jsbandApp')
       jp:'日本の'
     };
     $scope.systemLanguage='en';
+
+    $scope.$watch('language', function(newValue, oldValue) {
+      console.log(oldValue+"->"+newValue);
+      $translate.use(newValue);
+    });
 
     // get all notes and show them
     $http.get('/api/questionnaires')
