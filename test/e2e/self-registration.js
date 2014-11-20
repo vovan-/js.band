@@ -12,8 +12,17 @@ describe('Self-Registration Test: ', function() {
     browser.get('/#/selfregistration');
   });
 
-  it('This URL should points exactly to the SelfRegistration view', function () {
-    expect(element(by.cssContainingText('.ng-scope', 'Self registration')).isPresent()).toBe(true);
+  xit('This URL should points exactly to the SelfRegistration view', function () {
+    expect(element(by.css('h2 span:nth-child(2)')).getAttribute('translate')).toEqual('selfreg-header');
+
+  });
+  it('Changing dropdown selection should show labels on different languages', function () {
+    var languageSelect = element(by.model('language'));
+    selectDropdownByOptionValue(languageSelect, 'en');
+    expect(element(by.css('h2 span:nth-child(2)')).getText()).toEqual('Self registration');
+
+    selectDropdownByOptionValue(languageSelect, 'de');
+    expect(element(by.css('h2 span:nth-child(2)')).getText()).toEqual('Selbstregistrierung');
   });
 
   it('Language has not been changed to \'English\'', function () {

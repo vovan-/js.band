@@ -247,6 +247,22 @@ module.exports = function (grunt) {
       app: {
         src: ['<%= yeoman.app %>/index.html'],
         ignorePath:  /\.\.\//
+      },
+      test: {
+        devDependencies: true,
+        src: '<%= karma.unit.configFile%>',
+        ignorePath:  /\.\.\//,
+        fileTypes: {
+          js: {
+            block: /(([\s\t]*)\/\/\s*bower:*(\S*))(\n|\r|.)*?(\/\/\s*endbower)/gi,
+            detect: {
+              js: /'(.*\.js)'/gi
+            },
+            replace: {
+              js: '\'{{filePath}}\','
+            }
+          }
+        }
       }
     },
 
@@ -435,6 +451,7 @@ module.exports = function (grunt) {
        configFile: 'test/protractor.conf.js', // Default config file
        keepAlive: false, // If false, the grunt process stops when the test fails.
        noColor: false,
+//       debug:true,
        args: {
        }
      },
@@ -491,6 +508,7 @@ module.exports = function (grunt) {
     'concurrent:test',
     'autoprefixer',
     'connect:test',
+    'wiredep:test',
     'karma',
     'protractor:test'
   ]);
