@@ -19,4 +19,9 @@ describe('Controller: SelfRegistrationCtrl', function () {
   it('should contains list of chapters in scope', function () {
     expect(scope.chapters).not.toBeNull();
   });
+
+  it('should set translation.use on change of translation', inject(function ($translate) {
+    expect($translate.use()).toBeUndefined();
+
+  }));
 });
