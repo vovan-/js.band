@@ -8,15 +8,10 @@
  * Controller of the jsbandApp
  */
 
-var questionType = {
-  text:"text",
-  number:"number",
-  entity:"entity"
-};
 var PAGES = {
-  Answer:"Answer",
-  Finish:"Finish",
-  FollowUP:"FollowUP"
+  Answer:'Answer',
+  Finish:'Finish',
+  FollowUP:'FollowUP'
 };
 angular.module('jsbandApp')
   .controller('SelfRegistrationCtrl', function ($scope,  $http) {
@@ -26,10 +21,10 @@ angular.module('jsbandApp')
     $scope.language='de';
     //TODO What abount icons?
     $scope.availableLanguages={
-      en:"English",
-      de:"Deutsch",
-      ru:"Русский",
-      jp:"日本の"
+      en:'English',
+      de:'Deutsch',
+      ru:'Русский',
+      jp:'日本の'
     };
     $scope.systemLanguage='en';
 
@@ -48,7 +43,7 @@ angular.module('jsbandApp')
       console.log($scope.questionnaire);
     };
     $scope.translate = function (mlstring){
-      return mlstring[$scope.language] || mlstring[$scope.systemLanguage] || "no translation";
+      return mlstring[$scope.language] || mlstring[$scope.systemLanguage] || 'no translation';
     };
     $scope.saveAndNext = function () {
       // some validation here
@@ -60,6 +55,15 @@ angular.module('jsbandApp')
       $scope.currentPage = PAGES.Answer;
     };
     $scope.finishSelfRegistration = function () {
+      $http.post('/api/questionnaires', JSON.stringify($scope.questionnaire))
+        .success(function(data) {
+          //$scope.questionnaire = data;
+          console.log(data);
+        })
+        .error(function(data) {
+          console.log('Error: ' + data);
+        });
+
       // save answer on server & process result
       $scope.currentPage = PAGES.FollowUP;
     };

@@ -1,6 +1,25 @@
 'use strict';
 
-module.exports = function (grunt) {
+module.exports = function () {
+
+  var questionType = {
+    text: 'text',
+    number:'number',
+    entity:'entity'
+  };
+
+  var validationStatus = {
+    success: 'success',
+    failed: 'failed'
+  };
+
+  var validationMessages = {
+    isMandatory: 'is mandatory',
+    isLengthToLong: 'is too long (max length = 32)',
+    isNotNumber: 'is not a number',
+    isLessThanMinNumber: 'is less than min number (min number = 0)',
+    isGreaterThanMaxNumber: 'is greater than max number (max number = 1024)'
+  };
 
   var create_questionnaire = function(id, text) {
     return {
@@ -25,7 +44,7 @@ module.exports = function (grunt) {
                 de: "Einkommen"
               },
               type: "number",
-              value: 100000000.00,
+              value: 1000.00,
               mandatory: true
             },
             "question-id-3": {
@@ -80,6 +99,80 @@ module.exports = function (grunt) {
 
   var questionnaire = create_questionnaire(0, '');
 
+  var validateQuestionnaire = function(questionnaire) {
+    var chapters = questionnaire.chapters,
+      curChapterProperty,
+      result = true;
+
+    if (chapters) {
+      for(curChapterProperty in chapters) {
+        if (chapters.hasOwnProperty(curChapterProperty)) {
+          result = validateChapter(chapters[curChapterProperty]) && result;
+        }
+      }
+    }
+
+    return result;
+  };
+
+  var validateChapter = function(chapter) {
+    var questions = chapter.questions,
+      curQuestionProperty,
+      result = true;
+
+    if (questions) {
+      for(curQuestionProperty in questions) {
+        if (questions.hasOwnProperty(curQuestionProperty)) {
+          result = validateQuestion(questions[curQuestionProperty]) && result;
+        }
+      }
+    }
+
+    return result;
+  };
+
+  var validateQuestion = function(question) {
+    if (question.mandatory && !question.value) {
+      question.validationError = validationMessages.isMandatory;
+      return false;
+    }
+
+    switch (question.type) {
+      case questionType.text: return validateTextValue(question);
+      case questionType.number: return validateNumberValue(question);
+    }
+
+    return true;
+  };
+
+  var validateTextValue = function(question) {
+    if (question.value.length > 32) {
+      question.validationError = validationMessages.isLengthToLong;
+      return false;
+    }
+
+    return true;
+  };
+
+  var validateNumberValue = function(question) {
+    var validationError;
+
+    if (question.value && typeof question.value !== 'number') {
+      validationError = validationMessages.isLengthToLong;
+    } else if (question.value < 0) {
+      validationError = validationMessages.isLessThanMinNumber;
+    } else if (question.value > 1024) {
+      validationError = validationMessages.isGreaterThanMaxNumber;
+    }
+
+    if (validationError) {
+      question.validationError = validationError;
+      return false;
+    }
+
+    return true;
+  };
+
   return {
     dispatchRequest: function(req, res) {
       if (req.method === 'GET' && req.url.indexOf('/api/questionnaires') === 0) {
@@ -89,7 +182,19 @@ module.exports = function (grunt) {
         return true;
       }
 
+      if (req.method === 'POST' && req.url.indexOf('/api/questionnaires') === 0) {
+        var postedQuestionnaire = req.body,
+          isValid = validateQuestionnaire(postedQuestionnaire);
+
+        postedQuestionnaire.validationStatus = isValid ? validationStatus.success : validationStatus.failed;
+
+        res.write(JSON.stringify(postedQuestionnaire));
+        res.end();
+
+        return true;
+      }
+
       return false;
     }
   };
-};
+}();

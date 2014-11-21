@@ -15,8 +15,10 @@ module.exports = function (grunt) {
   // Time how long tasks take. Can help when optimizing build times
   require('time-grunt')(grunt);
 
+  var bodyParser = require('body-parser');
+
   // Load questionnaire service
-  var questionnaireServiceDispatcher = require('./questionnaireService.js')(grunt);
+  var questionnaireServiceDispatcher = require('./questionnaireService.js');
 
   var questionnaireMiddleware = function (req, res, next) {
     if (!questionnaireServiceDispatcher.dispatchRequest(req, res)) {
@@ -85,6 +87,7 @@ module.exports = function (grunt) {
           open: true,
           middleware: function (connect) {
             return [
+              connect().use(bodyParser.json()),
               questionnaireMiddleware,
               connect.static('.tmp'),
               connect().use(
@@ -101,6 +104,7 @@ module.exports = function (grunt) {
           port: 9001,
           middleware: function (connect) {
             return [
+              connect().use(bodyParser.json()),
               questionnaireMiddleware,
               connect.static('.tmp'),
               connect.static('test'),
@@ -119,6 +123,7 @@ module.exports = function (grunt) {
           base: '<%= yeoman.dist %>',
           middleware: function (connect) {
             return [
+              connect().use(bodyParser.json()),
               questionnaireMiddleware,
               connect.static(appConfig.dist)
             ];
@@ -367,7 +372,7 @@ module.exports = function (grunt) {
 
    protractor: {
      options: {
-       configFile: "test/protractor.conf.js", // Default config file
+       configFile: 'test/protractor.conf.js', // Default config file
        keepAlive: false, // If false, the grunt process stops when the test fails.
        noColor: false,
        args: {
