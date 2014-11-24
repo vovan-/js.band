@@ -33,7 +33,9 @@
                                                         <div class="col-sm-6">
                                                             <input id="{{questionId}}" name="question" type="{{question.type}}" ng-model="question.value"
                                                                    ng-required="question.mandatory" class="form-control">
-                                                            <span class="error" ng-show="questionForm.question.$error.required">Required!</span>
+                                                            <span class="slm-error" ng-show="questionForm.question.$error.required">Required!</span>
+                                                            <span class="slm-error"
+                                                                  ng-show="question.validationError">{{question.validationError}}</span>
                                                         </div>
                                                     </div>
                                                 </ng-form>

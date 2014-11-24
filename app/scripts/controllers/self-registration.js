@@ -57,7 +57,12 @@ angular.module('jsbandApp')
     $scope.finishSelfRegistration = function () {
       $http.post('/api/questionnaires', JSON.stringify($scope.questionnaire))
         .success(function(data) {
-          //$scope.questionnaire = data;
+          $scope.questionnaire = data;
+
+          if ($scope.questionnaire.validationStatus && $scope.questionnaire.validationStatus === VALIDATION_STATUS.Failed) {
+            $scope.currentPage = PAGES.Answer;
+          }
+
           console.log(data);
         })
         .error(function(data) {

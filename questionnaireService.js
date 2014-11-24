@@ -2,6 +2,8 @@
 
 module.exports = function () {
 
+  var availableCountries = ['USA', 'BY', 'RU'];
+
   var questionType = {
     text: 'text',
     number:'number',
@@ -14,11 +16,12 @@ module.exports = function () {
   };
 
   var validationMessages = {
-    isMandatory: 'is mandatory',
-    isLengthToLong: 'is too long (max length = 32)',
-    isNotNumber: 'is not a number',
-    isLessThanMinNumber: 'is less than min number (min number = 0)',
-    isGreaterThanMaxNumber: 'is greater than max number (max number = 1024)'
+    isMandatory: 'Field is mandatory',
+    isLengthToLong: 'Field is too long (max length = 32)',
+    isNotNumber: 'Field\'s value is not a number',
+    isLessThanMinNumber: 'Field is less than min number (min number = 0)',
+    isGreaterThanMaxNumber: 'Field is greater than max number (max number = 1024)',
+    notExistedCountry: 'Specified country doesn\'t exist (valid are: USA, BY, RU)'
   };
 
   var create_questionnaire = function(id, text) {
@@ -140,6 +143,7 @@ module.exports = function () {
     switch (question.type) {
       case questionType.text: return validateTextValue(question);
       case questionType.number: return validateNumberValue(question);
+      case questionType.entity: return validateEntityValue(question);
     }
 
     return true;
@@ -171,6 +175,25 @@ module.exports = function () {
     }
 
     return true;
+  };
+
+  var validateEntityValue = function(question) {
+    var i, curCountry;
+
+    if (!question.mandatory && !question.value) {
+      return true;
+    }
+
+    for (i = 0; i < availableCountries.length; i += 1) {
+      curCountry = availableCountries[i];
+
+      if (curCountry === question.value) {
+        return true;
+      }
+    }
+
+    question.validationError = validationMessages.notExistedCountry;
+    return false;
   };
 
   return {
