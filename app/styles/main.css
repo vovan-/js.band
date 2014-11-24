@@ -81,3 +81,7 @@ body {
 .ng-invalid.ng-dirty {
     border-color: #FA787E;
 }
+
+.slm-error {
+  color: #fa2929;
+}
