@@ -15,6 +15,8 @@ module.exports = function (grunt) {
   // Time how long tasks take. Can help when optimizing build times
   require('time-grunt')(grunt);
 
+  grunt.loadNpmTasks('grunt-connect-proxy');
+
   var bodyParser = require('body-parser');
 
   // Load questionnaire service
@@ -82,6 +84,13 @@ module.exports = function (grunt) {
         hostname: 'localhost',
         livereload: 35729
       },
+      proxies: [
+        {
+          context: '/api/questionnaires',
+          host: 'localhost',
+          port: 9080
+        }
+      ],
       livereload: {
         options: {
           open: true,
@@ -89,6 +98,24 @@ module.exports = function (grunt) {
             return [
               connect().use(bodyParser.json()),
               questionnaireMiddleware,
+              connect.static('.tmp'),
+              connect().use(
+                '/bower_components',
+                connect.static('./bower_components')
+              ),
+              connect.static(appConfig.app)
+            ];
+          }
+        }
+      },
+      'livereload-integration': {
+        options: {
+          open: true,
+          middleware: function (connect) {
+            var proxy = require('grunt-connect-proxy/lib/utils').proxyRequest;
+
+            return [
+              proxy,
               connect.static('.tmp'),
               connect().use(
                 '/bower_components',
@@ -117,6 +144,25 @@ module.exports = function (grunt) {
           }
         }
       },
+      'test-integration': {
+        options: {
+          port: 9001,
+          middleware: function (connect) {
+            var proxy = require('grunt-connect-proxy/lib/utils').proxyRequest;
+
+            return [
+              proxy,
+              connect.static('.tmp'),
+              connect.static('test'),
+              connect().use(
+                '/bower_components',
+                connect.static('./bower_components')
+              ),
+              connect.static(appConfig.app)
+            ];
+          }
+        }
+      },
       dist: {
         options: {
           open: true,
@@ -125,6 +171,20 @@ module.exports = function (grunt) {
             return [
               connect().use(bodyParser.json()),
               questionnaireMiddleware,
+              connect.static(appConfig.dist)
+            ];
+          }
+        }
+      },
+      'dist-integration': {
+        options: {
+          open: true,
+          base: '<%= yeoman.dist %>',
+          middleware: function (connect) {
+            var proxy = require('grunt-connect-proxy/lib/utils').proxyRequest;
+
+            return [
+              proxy,
               connect.static(appConfig.dist)
             ];
           }
@@ -405,6 +465,22 @@ module.exports = function (grunt) {
     ]);
   });
 
+  grunt.registerTask('serve-integration', 'Compile then start a connect web server with integration services', function (target) {
+    if (target === 'dist') {
+      return grunt.task.run(['build', 'connect:dist-integration:keepalive']);
+    }
+
+    grunt.task.run([
+      'clean:server',
+      'wiredep',
+      'concurrent:server',
+      'configureProxies:server',
+      'autoprefixer',
+      'connect:livereload-integration',
+      'watch'
+    ]);
+  });
+
   grunt.registerTask('server', 'DEPRECATED TASK. Use the "serve" task instead', function (target) {
     grunt.log.warn('The `server` task has been deprecated. Use `grunt serve` to start a server.');
     grunt.task.run(['serve:' + target]);
@@ -415,6 +491,16 @@ module.exports = function (grunt) {
     'concurrent:test',
     'autoprefixer',
     'connect:test',
+    'karma',
+    'protractor:test'
+  ]);
+
+  grunt.registerTask('test-integration', 'Prepare web server then first run unit tests using Karma, and after that E2E tests on it using protractor', [
+    'clean:server',
+    'concurrent:test',
+    'configureProxies:server',
+    'autoprefixer',
+    'connect:test-integration',
     'karma',
     'protractor:test'
   ]);
