@@ -9,6 +9,7 @@
     <!-- build:css(.) styles/vendor.css -->
     <!-- bower:css -->
     <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css" />
+    <link rel="stylesheet" href="bower_components/angular-ui-grid/ui-grid.css" />
     <!-- endbower -->
     <!-- endbuild -->
     <!-- build:css(.tmp) styles/main.css -->
@@ -28,6 +29,7 @@
           <li><a ng-href="#/about">About</a></li>
           <li><a ng-href="#">Contact</a></li>
           <li><a ng-href="#/selfregistration">SelfRegistration</a></li>
+          <li><a ng-href="#/accounts">Accounts</a></li>
         </ul>
         <h3 class="text-muted">jsband</h3>
       </div>
@@ -66,15 +68,18 @@
     <script src="bower_components/angular-resource/angular-resource.js"></script>
     <script src="bower_components/angular-route/angular-route.js"></script>
     <script src="bower_components/angular-translate/angular-translate.js"></script>
+    <script src="bower_components/angular-ui-grid/ui-grid.js"></script>
     <!-- endbower -->
     <!-- endbuild -->
 
         <!-- build:js({.tmp,app}) scripts/scripts.js -->
         <script src="scripts/app.js"></script>
         <script src="scripts/const.js"></script>
+        <script src="scripts/modules/common/components/directive.js"></script>
         <script src="scripts/controllers/main.js"></script>
         <script src="scripts/controllers/about.js"></script>
         <script src="scripts/controllers/self-registration.js"></script>
+        <script src="scripts/controllers/accounts.js"></script>
         <!-- endbuild -->
 </body>
 </html>

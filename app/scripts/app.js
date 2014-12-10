@@ -12,7 +12,8 @@ angular
   .module('jsbandApp', [
     'ngResource',
     'ngRoute',
-    'pascalprecht.translate'
+    'pascalprecht.translate',
+    'ui.grid'
   ])
   .config(function ($routeProvider, $translateProvider) {
     $routeProvider
@@ -25,8 +26,12 @@ angular
         controller: 'AboutCtrl'
       })
       .when('/selfregistration', {
-        templateUrl: '../views/self-registration.html',
+        templateUrl: 'views/self-registration.html',
         controller: 'SelfRegistrationCtrl'
+      })
+      .when('/accounts', {
+        templateUrl: 'views/accounts.html',
+        controller: 'AccountsCtrl'
       })
       .otherwise({
         redirectTo: '/'

@@ -1,0 +1,14 @@
+<form name="accountFilterForm" novalidate>
+  <div ng-repeat="curFilter in gridFilters">
+    <label>{{curFilter.caption}}</label>
+    <select ng-model="curFilter.condition" ng-options="code as name for (code, name) in availableFilterConditions"></select>
+    <input id="{{curFilter.id}}" name="filter" type="{{curFilter.type}}" ng-model="curFilter.value">
+  </div>
+
+  <div class="form-group">
+    <button type="button" class="btn btn-default" ng-click="search()">
+      <span class="glyphicon glyphicon-search" aria-hidden="true"></span> Search
+    </button>
+
+  </div>
+</form>
