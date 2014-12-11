@@ -1,0 +1,6 @@
+[
+  { "id": "filter0", "caption": "First name", "value": "al", "condition": "Contains", "type": "text" },
+  { "id": "filter1", "caption": "Last name", "value": "", "condition": "Starts with", "type": "text" },
+  { "id": "filter2", "caption": "Groups", "value": "", "condition": "Ends with", "type": "entity" },
+  { "id": "filter3", "caption": "Birthday", "value": "2014/12/5", "condition": "Equals", "type": "text" }
+]

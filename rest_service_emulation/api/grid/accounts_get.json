@@ -1,0 +1,7 @@
+[
+  {"First Name": "Vasia", "Last Name": "Pupkin", "Login": "apupkin", "Groups": "Dev"},
+  {"First Name": "Фёдор", "Last Name": "Достоевский", "Login": "fdostoevski", "Groups": "Mega Admin"},
+  {"First Name": "Alex", "Last Name": "Pushkin", "Login": "apushkin", "Groups": "Mega Admin"},
+  {"First Name": "Пётр", "Last Name": "Верховенский", "Login": "pverhovenski", "Groups": "Admin; Dev"},
+  {"First Name": "Николай", "Last Name": "Ставрогин", "Login": "nstavrogin", "Groups": "Admin; Dev"}
+]

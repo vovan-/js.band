@@ -19,11 +19,11 @@ module.exports = function (grunt) {
 
   var bodyParser = require('body-parser');
 
-  // Load questionnaire service
-  var questionnaireServiceDispatcher = require('./questionnaireService.js');
+  // Load rest service emulator
+  var restServiceEmulationDispatcher = require('./rest_service_emulation/restServiceEmulation.js');
 
-  var questionnaireMiddleware = function (req, res, next) {
-    if (!questionnaireServiceDispatcher.dispatchRequest(req, res)) {
+  var restServiceEmulationMiddleware = function (req, res, next) {
+    if (!restServiceEmulationDispatcher.dispatchRequest(req, res)) {
       next();
     }
   };
@@ -97,7 +97,7 @@ module.exports = function (grunt) {
           middleware: function (connect) {
             return [
               connect().use(bodyParser.json()),
-              questionnaireMiddleware,
+              restServiceEmulationMiddleware,
               connect.static('.tmp'),
               connect().use(
                 '/bower_components',
@@ -132,7 +132,7 @@ module.exports = function (grunt) {
           middleware: function (connect) {
             return [
               connect().use(bodyParser.json()),
-              questionnaireMiddleware,
+              restServiceEmulationMiddleware,
               connect.static('.tmp'),
               connect.static('test'),
               connect().use(
@@ -170,7 +170,7 @@ module.exports = function (grunt) {
           middleware: function (connect) {
             return [
               connect().use(bodyParser.json()),
-              questionnaireMiddleware,
+              restServiceEmulationMiddleware,
               connect.static(appConfig.dist)
             ];
           }
