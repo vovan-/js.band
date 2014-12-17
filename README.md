@@ -1,5 +1,6 @@
 js.band
 =======
+[![Gitter](https://badges.gitter.im/Join Chat.svg)](https://gitter.im/vovan-/js.band?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 Repo for trying out modern js technologies.
 
